@@ -1,0 +1,294 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Gestion d'une BDthèque
+# during dev, should point to your local machine
+host: localhost:8080
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /hello:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    get:
+      description: Returns 'Hello' to the caller
+      # used as the method name of the controller
+      operationId: hello
+      parameters:
+        - name: name
+          in: query
+          description: The name of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+  # Configuration de la route  
+  /authors:
+    # Configuration du chemin du contrôleur
+    x-swagger-router-controller: authors
+    # Précision du verbe HTTP 
+    get:
+      description: "Renvoie la liste complète des auteurs."
+      # Précision sur la méthode
+      operationId: authors
+      responses:
+        "200":
+          description: "Renvoie tous les auteurs présent dans la base."
+          schema: {
+             type: "array",
+             items: {
+               $ref: "#/definitions/Authors"
+             }
+           }
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /authors/{id}:
+    x-swagger-router-controller: authors
+    get:
+      description: "Renvoie un auteur suivant son identifiant technique."
+      operationId: author
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: "l'identifiant technique de l'auteur"
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Authors"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /series:
+    x-swagger-router-controller: series
+    get:
+      description: "Renvoie la liste des séries."
+      operationId: series
+      responses:
+        "200":
+          description: "Renvoie toutes les séries présent dans la base."
+          schema: {
+             type: "array",
+             items: {
+               $ref: "#/definitions/Series"
+             }
+           }
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /series/{id}:
+    x-swagger-router-controller: series
+    get:
+      description: "Renvoie une série suivant son identifiant technique."
+      operationId: serie
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: "l'identifiant technique de la série"
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Series"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /titles:
+    x-swagger-router-controller: titles
+    get:
+      description: "Renvoie la liste des titres présent dans la base."
+      operationId: titles
+      parameters:
+        - name: limit
+          in: query
+          type: integer
+          description: "le nombre de titre à retourner"
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: "l'offset de la première positionr"
+          required: false
+      responses:
+        "200":
+          description: "Renvoie tous les albums présent dans la base."
+          schema: {
+             type: "array",
+             items: {
+               $ref: "#/definitions/Titles"
+             }
+           }
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /titles/{id}:
+    x-swagger-router-controller: titles
+    get:
+      description: "Renvoie un album suivant son identifiant technique."
+      operationId: title
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: "l'identifiant technique de l'album"
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Series"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+            
+# complex objects have schema definitions
+definitions:
+  
+  Authors:
+    properties:
+      id:
+        type: "number"
+        description: "l'identifiant technique"
+      last_name:
+        type: "string"
+        description: "le nom de famille"
+      first_name:
+        type: "string"
+        description: "le prénom"
+      date_of_birth:
+        type: "string"
+        description: "la date de naissance"
+      place_of_birth:
+        type: "string"
+        description: "le lieux de naissance"
+      nationality:
+        type: "string"
+        description: "la nationalité"
+      series:
+        type: "array"     
+        description: "l'ensemble des séries de l'auteur"
+        items: 
+          type: "object"
+          properties: 
+            name: 
+              type: "string"
+              description: "Le nom de la série"
+              
+  Series:
+    properties:
+      id:
+        type: "number"
+        description: "l'identifiant technique"
+      name:
+        type: "string"
+        description: "le nom de la série"
+      author:
+        type: "string"
+        description: "le nom de l'auteur"
+      number_of_tome:
+        type: "integer"
+        description: "le nombre de tome existant"
+      current_series:
+        type: "boolean"
+        description: "indique true si la série est en cours sinon false"
+      titles:
+        type: "array"     
+        description: "l'ensemble des titres d'une série"
+        items: 
+          type: "object"
+          properties: 
+            name: 
+              type: "string"
+              description: "Le titre d'une BD de la série"
+  
+  Titles:
+    properties:
+      id:
+        type: "number"
+        description: "l'identifiant technique"
+      name:
+        type: "string"
+        description: "le titre de l'album"
+      serie:
+        type: "string"
+        description: "le nom de la série"
+      tome:
+        type: "string"
+        description: "la position de l'album dans la série"
+      isbn:
+        type: "string"
+        description: "l'identifiant ISBN"
+      editor:
+        type: "string"
+        description: "l'éditeur de l'album"
+      author:
+        type: "string"
+        description: "l'auteur de l'album"
+      illustrator:
+        type: "string"
+        description: "l'illustrateur de l'album"
+      colourist:
+        type: "string"
+        description: "le coloriste de l'album"
+        
+              
+  HelloWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
