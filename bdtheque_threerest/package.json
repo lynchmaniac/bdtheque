@@ -1,0 +1,13 @@
+{
+  "name": "testThreerest",
+  "description": "mon application de demo pour une gestion des BDs",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "^4.13.4",
+    "threerest": "1.0.1"
+  },
+  "scripts": {
+    "start": "node ./dist/js/app"
+  }
+}
