@@ -3,7 +3,7 @@
 var threerest = require('threerest');
 
 import * as ServiceAuthors from "./services/serviceAuthors";
-// import { ServiceAuthors2 } from "./services/serviceAuthors";
+// import { ServiceAuthor } from "./services/serviceAuthors";
 //import { ServiceTestId } from "./serviceHal";
 // ServiceTestAll
 // ServiceTestId
@@ -19,7 +19,7 @@ app.get("/", function(req, res){
 
 // load the service Test
 threerest.ServiceLoader.loadService(app, new ServiceAuthors.default());
-//threerest.ServiceLoader.loadService(app, new ServiceTestId());
+// threerest.ServiceLoader.loadService(app, new ServiceAuthor());
 // threerest.ServiceLoader.loadService(app, new ServiceAuthors2());
 
 
