@@ -2,6 +2,7 @@ import { Service } from "threerest";
 import { Methods } from "threerest";
 import { Hal } from "threerest";
 import { Pagination } from "threerest";
+import { NotFoundError } from "threerest";
 
 // import * as Author from "../models/author";
 
@@ -25,8 +26,7 @@ export default class ServiceAuthors {
   	if (result) {
       return getAuthor(result, id);
   	} else {
-  		// Si la liste est vide on renvoie un 200 avec un message d'explication
-  		return errors['empty_list_authors'];
+  	  throw new NotFoundError();
   	}
   }
 }
