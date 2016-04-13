@@ -15,6 +15,10 @@ var _serie = require("../models/serie");
 
 var _serie2 = _interopRequireDefault(_serie);
 
+var _title = require("../models/title");
+
+var _title2 = _interopRequireDefault(_title);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42,7 +46,6 @@ var BdHelper = function () {
       for (var i = 0; i < len; i++) {
         arr.push(BdHelper.getAuthor(json["authors"][i], i));
       }
-      console.log(arr);
       return arr;
     }
 
@@ -56,7 +59,6 @@ var BdHelper = function () {
     value: function getAuthor(json, id) {
       var series = [];
       for (var i = 0; i < json["series"].length; i++) {
-        console.log();
         series.push(BdHelper.getSerie(db, json["series"][i]["id"]));
       }
       return new _author2.default(id, json["first_name"], json["last_name"], series);
@@ -69,7 +71,6 @@ var BdHelper = function () {
   }, {
     key: "getSerie",
     value: function getSerie(json, id) {
-      console.log("coucou");
       return new _serie2.default(id, json["series"][id]["name"]);
     }
 
@@ -85,6 +86,32 @@ var BdHelper = function () {
       }
     }
 
+    /*
+     * Traitement de l'ensemble des données pour transformer les entrées
+     * titres de la base de donnée en suite d'objet Titre
+     */
+
+  }, {
+    key: "getTitles",
+    value: function getTitles(json) {
+      var arr = [];
+      var len = json["titles"].length;
+      for (var i = 0; i < len; i++) {
+        console.log(json["titles"][i]);
+        arr.push(BdHelper.getTitle(json["titles"][i], i));
+      }
+      return arr;
+    }
+
+    /*
+     * A partir des données d'un titre, on crée un objet Title.
+     */
+
+  }, {
+    key: "getTitle",
+    value: function getTitle(json, id) {
+      return new _title2.default(id, json["name"], json["author"]);
+    }
     // /**
     //  * Return the complete data for the test.
     //  *

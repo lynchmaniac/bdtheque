@@ -2,6 +2,7 @@ var assert = require("assert");
 
 import Author from "../models/author";
 import Serie from "../models/serie";
+import Title from "../models/title";
 
 var db = require('../database/database');
 
@@ -17,7 +18,6 @@ export default class BdHelper {
     for (var i = 0; i < len; i++) {
         arr.push(BdHelper.getAuthor(json["authors"][i], i));
     }
-    console.log(arr);
     return arr;
   }
 
@@ -29,7 +29,6 @@ export default class BdHelper {
     var series = [];
     for (var i=0 ; i < json["series"].length ; i++)
     {
-      console.log();
       series.push(BdHelper.getSerie(db, json["series"][i]["id"]));
     }
     return new Author(id, json["first_name"], json["last_name"], series);
@@ -39,7 +38,6 @@ export default class BdHelper {
    * A partir des données d'une série, on crée un objet Serie.
    */
   static getSerie(json, id) {
-    console.log("coucou");
     return new Serie(id, json["series"][id]["name"]);
   }
 
@@ -53,8 +51,26 @@ export default class BdHelper {
     }
   }
 
+  /*
+   * Traitement de l'ensemble des données pour transformer les entrées
+   * titres de la base de donnée en suite d'objet Titre
+   */
+  static getTitles(json) {
+    var arr = [];
+    var len = json["titles"].length;
+    for (var i = 0; i < len; i++) {
+        console.log(json["titles"][i]);
+        arr.push(BdHelper.getTitle(json["titles"][i], i));
+    }
+    return arr;
+  }
 
-
+  /*
+   * A partir des données d'un titre, on crée un objet Title.
+   */
+  static getTitle(json, id) {
+    return new Title(id, json["name"], json["author"]);
+  }
   // /**
   //  * Return the complete data for the test.
   //  *

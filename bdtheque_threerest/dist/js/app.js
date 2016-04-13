@@ -4,6 +4,14 @@ var _serviceAuthors = require("./services/serviceAuthors");
 
 var ServiceAuthors = _interopRequireWildcard(_serviceAuthors);
 
+var _serviceTitles = require("./services/serviceTitles");
+
+var ServiceTitles = _interopRequireWildcard(_serviceTitles);
+
+var _serviceTest = require("./services/serviceTest");
+
+var ServiceTest = _interopRequireWildcard(_serviceTest);
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -26,6 +34,8 @@ app.get("/", function (req, res) {
 
 // load the service Test
 threerest.ServiceLoader.loadService(app, new ServiceAuthors.default());
+threerest.ServiceLoader.loadService(app, new ServiceTitles.default());
+threerest.ServiceLoader.loadService(app, new ServiceTest.default());
 // threerest.ServiceLoader.loadService(app, new ServiceAuthor());
 // threerest.ServiceLoader.loadService(app, new ServiceAuthors2());
 
