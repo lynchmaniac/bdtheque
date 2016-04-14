@@ -29,27 +29,32 @@ export default class BdHelper {
     var series = [];
     for (var i=0 ; i < json["series"].length ; i++)
     {
-      series.push(BdHelper.getSerie(db, json["series"][i]["id"]));
+      series.push(BdHelper.getSerie(json["series"][i]));
     }
     return new Author(id, json["first_name"], json["last_name"], series);
   }
 
   /*
-   * A partir des données d'une série, on crée un objet Serie.
+   * Traitement de l'ensemble des données pour transformer les entrées
+   * series de la base de donnée en suite d'objet Serie
    */
-  static getSerie(json, id) {
-    return new Serie(id, json["series"][id]["name"]);
+  static getSeries(json) {
+    var arr = [];
+    var len = json["series"].length;
+    for (var i = 0; i < len; i++) {
+        arr.push(BdHelper.getSerie(json["series"][i]));
+    }
+    return arr;
   }
 
-  // Renvoie l'objet json correspondant à la catégorie, au critère voulue
-  static searchParams(json, categoryField, searchField, searchVal) {
-    for (var i=0 ; i < json[categoryField].length ; i++)
-    {
-      if (json[categoryField][i][searchField] == searchVal) {
-        return json[categoryField][i]
-      }
-    }
+  /*
+   * A partir des données d'une série, on crée un objet Serie.
+   */
+  static getSerie(json) {
+    return new Serie(json["id"], json["name"], json["author"]);
   }
+
+
 
   /*
    * Traitement de l'ensemble des données pour transformer les entrées
@@ -59,7 +64,6 @@ export default class BdHelper {
     var arr = [];
     var len = json["titles"].length;
     for (var i = 0; i < len; i++) {
-        console.log(json["titles"][i]);
         arr.push(BdHelper.getTitle(json["titles"][i], i));
     }
     return arr;
@@ -71,55 +75,16 @@ export default class BdHelper {
   static getTitle(json, id) {
     return new Title(id, json["name"], json["author"]);
   }
-  // /**
-  //  * Return the complete data for the test.
-  //  *
-  //  * @method
-  //  * @returns {json}
-  //  */
-  // static getTestData() {
-  //   return [
-  //       {firstName:"Peter", lastName:"Parker", secretIdentity: "Spiderman", offset:"0"},
-  //       {firstName:"Bruce", lastName:"Wayne", secretIdentity: "Batman", offset:"1"},
-  //       {firstName:"Clark", lastName:"Kent", secretIdentity: "Superman", offset:"2"},
-  //       {firstName:"Tony", lastName:"Stark", secretIdentity: "Iron Man", offset:"3"},
-  //       {firstName:"Steve", lastName:"Roders", secretIdentity: "Captain America", offset:"4"},
-  //       {firstName:"Bruce", lastName:"Banner", secretIdentity: "Hulk", offset:"5"},
-  //       {firstName:"Natasha", lastName:"Romanoff", secretIdentity: "Black Widow", offset:"6"},
-  //       {firstName:"James", lastName:"Howlett", secretIdentity: "Wolverine", offset:"7"},
-  //       {firstName:"Matt", lastName:"Murdock", secretIdentity: "Daredevil", offset:"8"},
-  //       {firstName:"Wade", lastName:"Wilson", secretIdentity: "Deadpool", offset:"9"},
-  //       {firstName:"Elektra", lastName:"Natchios", secretIdentity: "Elektra", offset:"10"},
-  //       {firstName:"Dave", lastName:"Lizewski", secretIdentity: "Kick-Ass", offset:"11"},
-  //       {firstName:"Franck", lastName:"Castle", secretIdentity: "Punisher", offset:"12"}
-  //     ];
-  // }
-  //
-  // /**
-  //  * Test all the data return from the test.
-  //  * The firstName, the lastName, the secretIdentity and the offset is test.
-  //  *
-  //  * @method
-  //  */
-  // static testOneEntry(data, expected) {
-  //   assert.equal(data.firstName, expected.firstName);
-  //   assert.equal(data.lastName, expected.lastName);
-  //   assert.equal(data.secretIdentity, expected.secretIdentity);
-  //   assert.equal(data.offset, expected.offset);
-  // }
-  //
-  // /**
-  //  * Test all the data return from the test.
-  //  * The firstName, the lastName, the secretIdentity and the offset is test.
-  //  *
-  //  * @method
-  //  */
-  // static testData(data, expected, index, length) {
-  //   for (var i = index; i < length; i++) {
-  //     //console.log(data[i]);
-  //     //console.log(expected[i]);
-  //     DataHelper.testOneEntry(data[i], expected[i]);
-  //   }
-  // }
 
+  /*
+   * Renvoie l'objet json correspondant à la catégorie, au critère voulue
+   */
+  static searchParams(json, categoryField, searchField, searchVal) {
+    for (var i=0 ; i < json[categoryField].length ; i++)
+    {
+      if (json[categoryField][i][searchField] == searchVal) {
+        return json[categoryField][i]
+      }
+    }
+  }
 }
