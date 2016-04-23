@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "express": "^4.13.4",
-    "threerest": "1.0.1"
+    "threerest": "1.0.4"
   },
   "scripts": {
     "start": "jsr compile:js & node ./dist/js/app"
