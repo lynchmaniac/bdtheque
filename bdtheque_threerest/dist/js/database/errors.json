@@ -1,5 +1,0 @@
-{
-    "empty_list_authors": {"message":  "aucun auteur trouvé pour cet id"},
-    "empty_list_series": {"message":  "aucune série trouvé pour cet id"},
-    "empty_list_titles": {"message":  "aucun titre trouvé pour cet id"}
-}
