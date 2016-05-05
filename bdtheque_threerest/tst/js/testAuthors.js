@@ -4,14 +4,15 @@ var express = require('express');
 var request = require('supertest');
 var threerest = require('threerest');
 
-import ServiceAuthors from "../../src/js/services/serviceAuthors";
+import * as ServiceAuthors from "../../src/js/services/serviceAuthors";
 var assert = require("assert");
 
 describe('Load service rest Authors', function(){
-  it('should add self link', function(done){
+  it('test all links for all authors', function(done){
 
     var app = express();
     threerest.ServiceLoader.loadService(app, new ServiceAuthors.default());
+
 
     request(app)
     .get('/authors')
@@ -40,7 +41,7 @@ describe('Load service rest Authors', function(){
     }).end(done);
   });
 
-  it('should add only one self link', function(done){
+  it('should have all series links and name for one author', function(done){
 
     var app = express();
     threerest.ServiceLoader.loadService(app, new ServiceAuthors.default());

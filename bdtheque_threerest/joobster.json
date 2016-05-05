@@ -3,6 +3,9 @@
     "compile" : {
       "presets": ["es2015", "stage-1"],
       "plugins" : ["transform-decorators-legacy"]
+    },
+    "webpack": {
+        "entry":"main.js"
     }
   }
 }
