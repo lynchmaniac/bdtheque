@@ -12,3 +12,5 @@ Le projet est appelé bdtheque et regroupe un ensemble de sous-projets.
   *bdtheque_routes* correspond à la partie **Tour de Gaule de notre API**
   
   *bdtheque_threerest* correspond à la partie **Le domaine d'HATEOAS**
+
+  Cet article a été écrit par lynchmaniac et wmoulin
