@@ -1,0 +1,12 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "bdtheque_express/package.json",
+        "bdtheque_routes/package.json",
+        "bdtheque_swagger_node/package.json",
+        "bdtheque_threerest/package.json"
+      ]
+    }
+  }
+}
