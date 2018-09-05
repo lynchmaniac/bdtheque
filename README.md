@@ -1,4 +1,7 @@
 # Bdtheque
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/lynchmaniac/bdtheque.svg)](https://greenkeeper.io/)
+
 Cet ensemble de projet concerne l'article sur les API hypermedia avec threerest.
 
 Le projet est appelé bdtheque et regroupe un ensemble de sous-projets.
