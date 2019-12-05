@@ -4,6 +4,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "superagent": "^5.1.2"
+  },
+  "scripts": {
+    "http": "node app_http.js",
+    "https": "node app_https.js"
   }
 }
